@@ -1,6 +1,6 @@
 package com.crecraftstudios.velocityplus.events;
 
-import com.crecraftstudios.velocityplus.Messages;
+import com.crecraftstudios.velocityplus.json.Messages;
 import com.crecraftstudios.velocityplus.Permissions;
 import com.crecraftstudios.velocityplus.VelocityPlus;
 import com.google.gson.JsonObject;
@@ -41,9 +41,11 @@ public class LoginEvents {
 
     @Subscribe
     public void onLoginRequest(LoginEvent event) {
-        String uuid = event.getPlayer().getUniqueId().toString().replaceAll("-", "");
-        if (!VelocityPlus.get().whitelist().has(uuid))
+        if (!VelocityPlus.get().whitelist.isWhitelisted(event.getPlayer().getUniqueId()))
             event.setResult(ResultedEvent.ComponentResult.denied(VelocityPlus.get().messages.getMessage(Messages.Keys.Message.NOT_WHITELISTED)));
+
+        if (VelocityPlus.get().bans.isBanned(event.getPlayer().getUniqueId()))
+            event.setResult(ResultedEvent.ComponentResult.denied(VelocityPlus.get().bans.getBanMessage(event.getPlayer().getUniqueId())));
     }
 
     @Subscribe

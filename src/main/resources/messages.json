@@ -16,10 +16,16 @@
   "command.whitelist.add-player": "Added %s to the whitelist",
   "command.whitelist.remove-player": "Removed %s from the whitelist",
   "command.whitelist.not-found": "<red>%s isn't in the whitelist</red>",
+  "command.ban.player-banned": "%s has now been banned",
+  "command.unban.player": "%s has now been unbanned",
   "messages.not-whitelisted": "You're not whitelist on this network",
   "messages.maintenance.current": "Server network is currently down for maintenance. Check back later",
   "messages.maintenance.current.ping": "Network currently down for maintenance",
   "messages.maintenance.entering": "<red>[ALERT]</red> <white>Server is going into maintenance in %s second(s)</white>",
   "messages.maintenance.entering.will-be-kicked": "<red>You will be kicked from the game</red>",
-  "messages.maintenance.entering.wont-be-kicked": "<green>You won't be kicked as you have the required permissions to stay</green>"
+  "messages.maintenance.entering.wont-be-kicked": "<green>You won't be kicked as you have the required permissions to stay</green>",
+  "messages.whitelist.kicked": "<red>You've been removed from the whitelist</red>",
+  "messages.ban.perm": "<red>You are permanently banned from this server!</red>\n\n<gray>Reason:</gray> <white>%s</white>\n<gray>Ban ID:</gray> <white>%s</white>",
+  "messages.ban.temp": "<red>You are temporarily banned from the server!</red>\n\n<gray>Reason:</gray> <white>%s</white>\n<gray>Ban Expiry:</gray> <white>%s</white>\n<gray>Ban ID:</gray> <white>%s</white>",
+  "messages.mojang.player-not-found": "Username '%s' does not exist"
 }

@@ -3,6 +3,10 @@ package com.crecraftstudios.velocityplus;
 import com.crecraftstudios.velocityplus.commands.*;
 import com.crecraftstudios.velocityplus.events.LoginEvents;
 import com.crecraftstudios.velocityplus.events.ProxyEvents;
+import com.crecraftstudios.velocityplus.json.Bans;
+import com.crecraftstudios.velocityplus.json.Config;
+import com.crecraftstudios.velocityplus.json.Messages;
+import com.crecraftstudios.velocityplus.json.Whitelist;
 import com.crecraftstudios.velocityplus.network.HttpServer;
 import com.google.gson.JsonObject;
 import com.google.inject.Inject;
@@ -31,13 +35,12 @@ public class VelocityPlus {
     /// Use this to call whitelist functions. If you want the actual whitelist data, call whitelist()
     public final Whitelist whitelist;
     public final Messages messages;
+    public final Bans bans;
 
     public final Path directory;
+    private final Maintenance maintenance;
 
     private static VelocityPlus instance;
-
-    private boolean maintenanceMode=false;
-    private final Maintenance maintenance;
 
     @Inject
     public VelocityPlus(ProxyServer proxy, Logger logger, @DataDirectory Path dir) {
@@ -58,6 +61,8 @@ public class VelocityPlus {
         this.messages.load();
 
         this.maintenance=new Maintenance();
+
+        this.bans = new Bans();
     }
 
     @Subscribe
@@ -120,6 +125,8 @@ public class VelocityPlus {
         this.registerCommand(commandManager, HubCommand.createCommand(this.proxy), "hub", "lobby", "home");
         this.registerCommand(commandManager, WhitelistCommand.createCommand(this.proxy), "global-whitelist", "gwhitelist", "proxy-whitelist", "pwhitelist");
         this.registerCommand(commandManager, MaintenanceCommand.createCommand(), "maintenance", "main");
+        this.registerCommand(commandManager, BanCommand.createCommand(this.proxy), "vban", "proxy-ban", "velocity-ban", "pban");
+        this.registerCommand(commandManager, UnbanCommand.createCommand(this.proxy), "vunban", "proxy-unban", "velocity-unban", "punban");
     }
 
     private void registerCommand(CommandManager manager, BrigadierCommand commandObject, String command, String... aliases) {

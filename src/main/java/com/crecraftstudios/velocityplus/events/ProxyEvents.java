@@ -1,6 +1,6 @@
 package com.crecraftstudios.velocityplus.events;
 
-import com.crecraftstudios.velocityplus.Messages;
+import com.crecraftstudios.velocityplus.json.Messages;
 import com.crecraftstudios.velocityplus.ServerDetails;
 import com.crecraftstudios.velocityplus.VelocityPlus;
 import com.crecraftstudios.velocityplus.utils.ServerUtils;

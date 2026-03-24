@@ -1,6 +1,6 @@
 package com.crecraftstudios.velocityplus.commands;
 
-import com.crecraftstudios.velocityplus.Messages;
+import com.crecraftstudios.velocityplus.json.Messages;
 import com.crecraftstudios.velocityplus.Permissions;
 import com.crecraftstudios.velocityplus.VelocityPlus;
 import com.mojang.brigadier.Command;
@@ -9,10 +9,6 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextDecoration;
 
 public class AlertCommand {
     public static BrigadierCommand createCommand(final ProxyServer proxy) {

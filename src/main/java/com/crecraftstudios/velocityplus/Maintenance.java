@@ -1,5 +1,6 @@
 package com.crecraftstudios.velocityplus;
 
+import com.crecraftstudios.velocityplus.json.Messages;
 import com.velocitypowered.api.scheduler.ScheduledTask;
 
 import java.util.concurrent.TimeUnit;

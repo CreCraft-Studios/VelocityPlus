@@ -1,9 +1,9 @@
 package com.crecraftstudios.velocityplus.commands;
 
-import com.crecraftstudios.velocityplus.Messages;
+import com.crecraftstudios.velocityplus.json.Messages;
 import com.crecraftstudios.velocityplus.Permissions;
 import com.crecraftstudios.velocityplus.VelocityPlus;
-import com.crecraftstudios.velocityplus.utils.ExceptionUtils;
+import com.crecraftstudios.velocityplus.utils.Mojang;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -14,7 +14,6 @@ import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -65,7 +64,7 @@ public class WhitelistCommand {
                                     CommandSource source = ctx.getSource();
                                     switch (action) {
                                         case "add":
-                                            getUUID(player).thenApply(uuid -> {
+                                            Mojang.getPlayerUUID(player).thenApply(uuid -> {
                                                 if (uuid==null) {
                                                     source.sendMessage(VelocityPlus.get().messages.getMessage(Messages.Keys.Commands.WHITELIST_ERROR));
                                                     return Command.SINGLE_SUCCESS;
@@ -86,6 +85,8 @@ public class WhitelistCommand {
                                                 if (_username.equalsIgnoreCase(player)) {
                                                     json.remove();
                                                     source.sendMessage(VelocityPlus.get().messages.getMessage(Messages.Keys.Commands.WHITELIST_REMOVE_PLAYER));
+
+                                                    VelocityPlus.get().proxy.getPlayer(_username).ifPresent(p->p.disconnect(VelocityPlus.get().messages.getMessage(Messages.Keys.Message.REMOVED_FROM_WHITELIST)));
                                                     break;
                                                 }
                                                 source.sendMessage(VelocityPlus.get().messages.getMessage(Messages.Keys.Commands.WHITELIST_NOT_FOUND, player));
@@ -100,7 +101,7 @@ public class WhitelistCommand {
         return new BrigadierCommand(command);
     }
 
-    private static CompletableFuture<String> getUUID(String username) {
+    /*private static CompletableFuture<String> getUUID(String username) {
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -124,5 +125,5 @@ public class WhitelistCommand {
                     VelocityPlus.get().logger.error(err.getMessage());
                    return null;
                 });
-    }
+    }*/
 }

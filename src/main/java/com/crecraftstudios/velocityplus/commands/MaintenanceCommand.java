@@ -1,6 +1,6 @@
 package com.crecraftstudios.velocityplus.commands;
 
-import com.crecraftstudios.velocityplus.Messages;
+import com.crecraftstudios.velocityplus.json.Messages;
 import com.crecraftstudios.velocityplus.Permissions;
 import com.crecraftstudios.velocityplus.VelocityPlus;
 import com.mojang.brigadier.Command;

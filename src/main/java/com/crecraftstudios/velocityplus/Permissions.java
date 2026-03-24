@@ -9,6 +9,8 @@ public class Permissions {
         public static final String MESSAGE = "velocityplus.admin.msg";
         public static final String MAINTENANCE = "velocityplus.admin.maintenance";
         public static final String ALERT = "velocityplus.admin.alert";
+        public static final String BAN_PERM = "velocityplus.admin.ban.perm";
+        public static final String UNBAN_PERM = "velocityplus.admin.unban.perm";
     }
 
     public static final String CONNECT_IN_MAINTENANCE = "velocityplus.admin.enter-on-maintenance";
