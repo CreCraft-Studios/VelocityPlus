@@ -18,7 +18,7 @@
   "command.whitelist.not-found": "<red>%s isn't in the whitelist</red>",
   "command.ban.player-banned": "%s has now been banned",
   "command.unban.player": "%s has now been unbanned",
-  "messages.not-whitelisted": "You're not whitelist on this network",
+  "messages.not-whitelisted": "You're not whitelisted on this network",
   "messages.maintenance.current": "Server network is currently down for maintenance. Check back later",
   "messages.maintenance.current.ping": "Network currently down for maintenance",
   "messages.maintenance.entering": "<red>[ALERT]</red> <white>Server is going into maintenance in %s second(s)</white>",
