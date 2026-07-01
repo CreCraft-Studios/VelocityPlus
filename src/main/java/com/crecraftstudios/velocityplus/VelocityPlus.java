@@ -2,12 +2,13 @@ package com.crecraftstudios.velocityplus;
 
 import com.crecraftstudios.velocityplus.commands.*;
 import com.crecraftstudios.velocityplus.events.LoginEvents;
-import com.crecraftstudios.velocityplus.events.ProxyEvents;
+import com.crecraftstudios.velocityplus.events.ServerEvents;
 import com.crecraftstudios.velocityplus.json.Bans;
 import com.crecraftstudios.velocityplus.json.Config;
 import com.crecraftstudios.velocityplus.json.Messages;
 import com.crecraftstudios.velocityplus.json.Whitelist;
 import com.crecraftstudios.velocityplus.network.HttpServer;
+import com.crecraftstudios.velocityplus.utils.ServerUtils;
 import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.BrigadierCommand;
@@ -23,7 +24,7 @@ import org.slf4j.Logger;
 import java.nio.file.Path;
 import java.util.HashSet;
 
-@Plugin(id = "velocityplus", name = "VelocityPlus", version = BuildConstants.VERSION, authors = "CoolBoy376")
+@Plugin(id = "velocityplus", name = "VelocityPlus", version = BuildConstants.VERSION, authors = {"CoolBoy376", "OneOnlyBob"})
 public class VelocityPlus {
     private final HashSet<String> onlineServers = new HashSet<>();
 
@@ -68,10 +69,13 @@ public class VelocityPlus {
     @Subscribe
     public void onInit(ProxyInitializeEvent event) {
         this.proxy.getEventManager().register(this, new LoginEvents());
-        this.proxy.getEventManager().register(this, new ProxyEvents());
+        //this.proxy.getEventManager().register(this, new ProxyEvents()); //<--planned for removal
+        this.proxy.getEventManager().register(this, new ServerEvents());
 
         HttpServer httpServer = new HttpServer();
         httpServer.start();
+
+        ServerUtils.pingAllRegisteredServers();
     }
 
     public static VelocityPlus get() {
@@ -83,10 +87,12 @@ public class VelocityPlus {
     }
 
     public void serverIsOffline(String serverName) {
+        this.logger.info("{} is set to offline", serverName);
         this.onlineServers.remove(serverName);
     }
 
     public void serverIsOnline(String serverName) {
+        this.logger.info("{} is set to online", serverName);
         this.onlineServers.add(serverName);
     }
 

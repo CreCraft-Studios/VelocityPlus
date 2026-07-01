@@ -36,13 +36,14 @@ public class HttpServer {
                        case "/api/register" -> this.handleRegister(json);
                        case "/api/online" -> this.handleOnline(json.get("name").getAsString());
                        case "/api/offline" -> this.handleOffline(json.get("name").getAsString());
-                       case "api/unregister" -> this.handleUnregister(json.get("name").getAsString());
+                       case "/api/unregister" -> this.handleUnregister(json.get("name").getAsString());
                        default -> VelocityPlus.get().logger.info("{} what the heck is this path????", path);
                    }
 
                    String response = "OK";
                    byte[] bytes = response.getBytes();
                    exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
+                   exchange.getResponseHeaders().add("Server", "VelocityPlus");
                    exchange.sendResponseHeaders(200, bytes.length);
 
                    try (OutputStream os = exchange.getResponseBody()) {
@@ -93,11 +94,9 @@ public class HttpServer {
 
     private void handleOffline(String name) {
         VelocityPlus.get().serverIsOffline(name);
-        VelocityPlus.get().logger.info("{} is set to offline", name);
     }
 
     private void handleOnline(String name) {
         VelocityPlus.get().serverIsOnline(name);
-        VelocityPlus.get().logger.info("{} is set to online", name);
     }
 }

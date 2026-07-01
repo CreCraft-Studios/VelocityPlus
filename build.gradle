@@ -19,6 +19,9 @@ repositories {
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
+
+    implementation "com.kohlschutter.junixsocket:junixsocket-common:2.10.1"
+    runtimeOnly "com.kohlschutter.junixsocket:junixsocket-native-common:2.10.1"
 }
 
 tasks {

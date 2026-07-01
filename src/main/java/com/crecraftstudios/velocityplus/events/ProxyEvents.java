@@ -17,6 +17,8 @@ import java.util.Optional;
 public class ProxyEvents {
     private final HashMap<String, ServerDetails> cacheServers = new HashMap<>();
 
+    /**Velocity already has this feature, no need to reinvent the wheel*/
+    @Deprecated(forRemoval = true)
     @Subscribe
     public void onProxyPing(ProxyPingEvent event) {
         ServerPing ping = event.getPing();

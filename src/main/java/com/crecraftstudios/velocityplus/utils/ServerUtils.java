@@ -3,6 +3,8 @@ package com.crecraftstudios.velocityplus.utils;
 import com.crecraftstudios.velocityplus.VelocityPlus;
 import com.google.gson.JsonObject;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+
+import java.util.Collection;
 import java.util.Optional;
 
 public class ServerUtils {
@@ -16,5 +18,18 @@ public class ServerUtils {
 
         Optional<RegisteredServer> server = VelocityPlus.get().proxy.getServer(json.get(domain).getAsString());
         return server.orElse(null);
+    }
+
+    public static void pingAllRegisteredServers() {
+        Collection<RegisteredServer> servers = VelocityPlus.get().proxy.getAllServers();
+
+        for(RegisteredServer s : servers) {
+            s.ping().whenComplete((ping, err)->{
+                if (err!=null)
+                    return;
+
+                VelocityPlus.get().serverIsOnline(s.getServerInfo().getName());
+            });
+        }
     }
 }
