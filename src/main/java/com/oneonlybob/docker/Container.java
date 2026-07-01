@@ -82,4 +82,8 @@ public class Container {
         this.docker.get().setPath("/containers/"+this.containerName+"/stop");
         this.docker.get().connect();
     }
+
+    public String getName() {
+        return this.containerName;
+    }
 }

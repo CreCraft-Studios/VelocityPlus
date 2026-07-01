@@ -1,5 +1,6 @@
 package com.crecraftstudios.velocityplus.events;
 
+import com.crecraftstudios.velocityplus.QueueManager;
 import com.crecraftstudios.velocityplus.VelocityPlus;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerPreConnectEvent;
@@ -20,6 +21,7 @@ public class ServerEvents {
 
             fallback.ifPresent(server ->{
                 event.setResult(ServerPreConnectEvent.ServerResult.allowed(server));
+                VelocityPlus.get().queueManager.addQueue(new QueueManager.Queue(event.getPlayer(), event.getOriginalServer()));
             });
         }
     }

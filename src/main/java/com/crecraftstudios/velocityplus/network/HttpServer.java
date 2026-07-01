@@ -20,7 +20,7 @@ public class HttpServer {
     private void runServer() {
         try {
             VelocityPlus.get().logger.info("Starting HTTP server");
-            this.server = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(8586), 0);
+            this.server = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(VelocityPlus.get().config().get("webserver").getAsJsonObject().get("host").getAsString(), VelocityPlus.get().config().get("webserver").getAsJsonObject().get("port").getAsInt()), 0);
         } catch(IOException err) {
             VelocityPlus.get().logger.error(err.getMessage()+"\nStacktrace: "+ExceptionUtils.createStacktrace(err));
         }

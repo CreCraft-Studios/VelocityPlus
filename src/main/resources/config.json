@@ -1,5 +1,10 @@
 {
   "lobby": "notset",
   "fallback": "notset",
-  "docker-support": false
+  "docker-support": false,
+  "webserver-support": true,
+  "webserver": {
+    "host": "127.0.0.1",
+    "port": 8586
+  }
 }

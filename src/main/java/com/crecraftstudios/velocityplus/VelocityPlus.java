@@ -37,6 +37,7 @@ public class VelocityPlus {
     public final Whitelist whitelist;
     public final Messages messages;
     public final Bans bans;
+    public final QueueManager queueManager;
 
     public final Path directory;
     private final Maintenance maintenance;
@@ -64,6 +65,8 @@ public class VelocityPlus {
         this.maintenance=new Maintenance();
 
         this.bans = new Bans();
+
+        this.queueManager = new QueueManager();
     }
 
     @Subscribe
@@ -72,8 +75,10 @@ public class VelocityPlus {
         //this.proxy.getEventManager().register(this, new ProxyEvents()); //<--planned for removal
         this.proxy.getEventManager().register(this, new ServerEvents());
 
-        HttpServer httpServer = new HttpServer();
-        httpServer.start();
+        if (config().get("webserver-support").getAsBoolean()) {
+            HttpServer httpServer = new HttpServer();
+            httpServer.start();
+        }
 
         ServerUtils.pingAllRegisteredServers();
     }
