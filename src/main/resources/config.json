@@ -1,8 +1,8 @@
 {
   "lobby": "lobby",
   "fallback": "fallback",
-  "docker-support": false,
-  "webserver-support": true,
+  "docker-socket-enabled": false,
+  "webserver-enabled": true,
   "webserver": {
     "host": "127.0.0.1",
     "port": 8586

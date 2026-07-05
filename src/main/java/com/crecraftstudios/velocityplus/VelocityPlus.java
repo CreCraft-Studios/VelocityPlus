@@ -76,7 +76,7 @@ public class VelocityPlus {
         this.proxy.getEventManager().register(this, new LoginEvents());
         //this.proxy.getEventManager().register(this, new ProxyEvents()); //<--planned for removal
 
-        if (config().get("webserver-support").getAsBoolean()) {
+        if (config().get("webserver-enabled").getAsBoolean()) {
             HttpServer httpServer = new HttpServer();
             httpServer.start();
         }
