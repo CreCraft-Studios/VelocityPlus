@@ -14,6 +14,6 @@ public class ExceptionUtils {
     }
 
     public static void printException(Exception err) {
-        VelocityPlus.get().logger.error(err.getMessage()+"\nStacktrace: "+ createStacktrace(err));
+        VelocityPlus.get().logger.error("{}\nStacktrace: {}", err.getMessage(), createStacktrace(err));
     }
 }
