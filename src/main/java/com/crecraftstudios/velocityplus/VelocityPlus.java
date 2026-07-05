@@ -21,6 +21,8 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import org.slf4j.Logger;
 
+import com.oneonlybob.docker.Docker;
+
 import java.nio.file.Path;
 import java.util.HashSet;
 
@@ -80,6 +82,9 @@ public class VelocityPlus {
             httpServer.start();
         }
 
+        if (config().get("docker-socket-enabled").getAsBoolean())
+            Docker.init();
+
         ServerUtils.pingAllRegisteredServers();
     }
 
@@ -99,6 +104,7 @@ public class VelocityPlus {
     public void serverIsOnline(String serverName) {
         this.logger.info("{} is set to online", serverName);
         this.onlineServers.add(serverName);
+        this.queueManager.moveNeededPlayers(serverName);
     }
 
     public boolean inMaintenanceMode() {

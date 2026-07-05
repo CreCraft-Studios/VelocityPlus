@@ -1,10 +1,21 @@
 {
-  "lobby": "notset",
-  "fallback": "notset",
+  "lobby": "lobby",
+  "fallback": "fallback",
   "docker-support": false,
   "webserver-support": true,
   "webserver": {
     "host": "127.0.0.1",
     "port": 8586
-  }
+  },
+  "docker":
+    [
+      {
+        "server_name": "name of the minecraft server in velocity.toml",
+        "container_name": "name of the docker container"
+      },
+    {
+      "server_name": "survival",
+      "container_name": "mc-survival"
+    }
+  ]
 }

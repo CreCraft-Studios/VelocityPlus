@@ -2,8 +2,7 @@ package com.oneonlybob.docker;
 
 import com.crecraftstudios.velocityplus.VelocityPlus;
 import com.crecraftstudios.velocityplus.utils.ExceptionUtils;
-import com.oneonlybob.docker.network.Headers;
-import com.oneonlybob.docker.network.Method;
+import com.oneonlybob.docker.network.Request;
 import com.oneonlybob.docker.network.Response;
 import org.newsclub.net.unix.AFUNIXSocket;
 import org.newsclub.net.unix.AFUNIXSocketAddress;
@@ -11,58 +10,15 @@ import org.newsclub.net.unix.AFUNIXSocketAddress;
 import java.io.*;
 
 public class UnixClient {
-    private final String host;
-    private String path;
-    private Method method;
-    public final Headers headers;
-    private String body="";
+    private final File file;
 
-    File file;
-
-    public UnixClient(String host) throws FileNotFoundException {
-        this(host, "");
-    }
-
-    /**
-     * @param host The host or the path to the file of the socket you wish to connect to
-     * @param path The path like in a url. e.g. /containers/create*/
-    public UnixClient(String host, String path) throws FileNotFoundException {
-        this.host =host;
-        this.path=path;
-        this.method=Method.GET;
-
-        this.headers=new Headers();
-        this.headers.add("Accept", "application/json");
-        this.headers.add("User-Agent", "Best-Agent");
-
-        this.file = new File(this.host);
+    public UnixClient(String host) throws FileNotFoundException{
+        this.file = new File(host);
         if (!this.file.exists())
-            throw new FileNotFoundException("Can't find file to connect via Unix Socket");
+            throw new FileNotFoundException("Can't find socket to connect. Path tried "+host);
     }
 
-    public void setMethod(Method method) {
-        this.method=method;
-    }
-
-    public void setPath(String path) {
-        this.path=path;
-    }
-
-    public String getPath() {
-        return this.path;
-    }
-
-    public void setBody(String body) {
-        this.body=body;
-        this.headers.replace("Content-Length", String.valueOf(this.body.length()));
-    }
-
-    public void clearBody() {
-        this.body="";
-        this.headers.remove("Content-Length");
-    }
-
-    public Response connect() {
+    public Response connect(Request request) {
         try (AFUNIXSocket socket = AFUNIXSocket.newInstance()) {
 
             socket.connect(AFUNIXSocketAddress.of(this.file));
@@ -70,14 +26,14 @@ public class UnixClient {
             OutputStream out = socket.getOutputStream();
 
 
-            StringBuilder request = new StringBuilder();
-            request.append(this.method.toString()).append(" ").append(this.path).append(" HTTP/1.1\r\n");
-            request.append(this.headers.toString());
+            StringBuilder builder = new StringBuilder();
+            builder.append(request.getMethod().toString()).append(" ").append(request.getPath()).append(" HTTP/1.1\r\n");
+            builder.append(request.headers.toString());
 
-            if (!this.body.isEmpty())
-                request.append(this.body);
+            if (!request.getBodyAsString().isEmpty())
+                builder.append(request.getBodyAsString());
 
-            out.write(request.toString().getBytes());
+            out.write(builder.toString().getBytes());
             out.flush();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
