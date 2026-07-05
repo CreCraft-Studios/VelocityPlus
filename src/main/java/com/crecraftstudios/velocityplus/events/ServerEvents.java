@@ -15,13 +15,14 @@ public class ServerEvents {
         if (event.getPreviousServer()!=null)
             return;
 
-        String name = event.getOriginalServer().getServerInfo().getName();
-        if (!VelocityPlus.get().isServerOnline(name)) {
+        String requestedServerName = event.getOriginalServer().getServerInfo().getName();
+        if (!VelocityPlus.get().isServerOnline(requestedServerName)) {
             Optional<RegisteredServer> fallback = VelocityPlus.get().proxy.getServer(VelocityPlus.get().config().get("fallback").getAsString());
 
             fallback.ifPresent(server ->{
                 event.setResult(ServerPreConnectEvent.ServerResult.allowed(server));
                 VelocityPlus.get().queueManager.addQueue(new QueueManager.Queue(event.getPlayer(), event.getOriginalServer()));
+                VelocityPlus.get().queueManager.startServer(requestedServerName);
             });
         }
     }

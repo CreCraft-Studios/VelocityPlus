@@ -1,13 +1,12 @@
 package com.crecraftstudios.velocityplus;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.oneonlybob.docker.Container;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 public class QueueManager {
     private final HashMap<String, ArrayList<Queue>> queuedPlayers = new HashMap<>();
@@ -37,15 +36,24 @@ public class QueueManager {
             return;
 
         Optional<RegisteredServer> server = VelocityPlus.get().proxy.getServer(serverName);
-        //Container container = new Container();
+        if (server.isEmpty()) {
+            VelocityPlus.get().logger.error("Can't start server {} as it's not found", serverName);
+            return;
+        }
+
+        JsonArray containerArray = VelocityPlus.get().config().get("docker").getAsJsonArray();
+
+        containerArray.forEach(con->{
+            JsonObject obj = con.getAsJsonObject();
+
+            if (!Objects.equals(obj.get("server_name").getAsString(), serverName))
+                return;
+
+            Container.start(obj.get("container_name").getAsString());
+            this.queuedServers.put(serverName, server.get());
+
+        });
     }
 
     public record Queue(Player player, RegisteredServer server) {}
-    public static class Server {
-        private final RegisteredServer server;
-
-        public Server(RegisteredServer server) {
-            this.server=server;
-        }
-    }
 }

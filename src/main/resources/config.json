@@ -12,10 +12,6 @@
       {
         "server_name": "name of the minecraft server in velocity.toml",
         "container_name": "name of the docker container"
-      },
-    {
-      "server_name": "survival",
-      "container_name": "mc-survival"
-    }
+      }
   ]
 }

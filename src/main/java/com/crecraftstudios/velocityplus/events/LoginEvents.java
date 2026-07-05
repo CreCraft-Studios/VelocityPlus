@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class LoginEvents {
-    @Subscribe
+    @Deprecated(forRemoval = true)
     public void onChooseInitialServer(PlayerChooseInitialServerEvent event) {
         event.getPlayer().getVirtualHost().ifPresent(address -> {
             if (VelocityPlus.get().config().has("root_domain")) {

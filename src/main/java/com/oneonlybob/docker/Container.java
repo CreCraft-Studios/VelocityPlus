@@ -1,5 +1,11 @@
 package com.oneonlybob.docker;
 
+import com.crecraftstudios.velocityplus.VelocityPlus;
+import com.oneonlybob.docker.network.Method;
+import com.oneonlybob.docker.network.Request;
+import com.oneonlybob.docker.network.Response;
+import com.oneonlybob.docker.network.StatusCodes;
+
 public class Container {
 
     private final String name;
@@ -26,6 +32,38 @@ public class Container {
 
     public String getLabel() {
         return this.label;
+    }
+
+    public void start() {
+        Container.start(this.name);
+    }
+
+    public void stop() {
+        Container.stop(this.name);
+    }
+
+    public static void start(String containerName) {
+        Request request = Request.builder()
+                .setMethod(Method.POST)
+                .setPath("/containers/{}/start", containerName)
+                .build();
+
+        Response res = Docker.send(request);
+
+        if (!res.ok() && res.statusCode!=StatusCodes.NOT_MODIFIED)
+            VelocityPlus.get().logger.error("Failed to start docker container {}\nDocker returned status code {} with message {}", containerName, res.statusCode, res.reason);
+    }
+
+    public static void stop(String containerName) {
+        Request request = Request.builder()
+                .setMethod(Method.POST)
+                .setPath("/container/{}/stop", containerName)
+                .build();
+
+        Response res = Docker.send(request);
+
+        if (!res.ok() && res.statusCode!= StatusCodes.NOT_MODIFIED)
+            VelocityPlus.get().logger.error("Failed to stop docker container {}\nDocker returned status code {} with message {}", containerName, res.statusCode, res.reason);
     }
 
     public static Builder builder() {
