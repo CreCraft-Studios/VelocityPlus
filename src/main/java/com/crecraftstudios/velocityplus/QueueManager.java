@@ -2,7 +2,6 @@ package com.crecraftstudios.velocityplus;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.oneonlybob.docker.Container;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 
@@ -49,7 +48,6 @@ public class QueueManager {
             if (!Objects.equals(obj.get("server_name").getAsString(), serverName))
                 return;
 
-            Container.start(obj.get("container_name").getAsString());
             this.queuedServers.put(serverName, server.get());
 
         });

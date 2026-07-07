@@ -21,8 +21,6 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import org.slf4j.Logger;
 
-import com.oneonlybob.docker.Docker;
-
 import java.nio.file.Path;
 import java.util.HashSet;
 
@@ -74,16 +72,12 @@ public class VelocityPlus {
     @Subscribe
     public void onInit(ProxyInitializeEvent event) {
         this.proxy.getEventManager().register(this, new LoginEvents());
+        this.proxy.getEventManager().register(this, new ServerEvents());
         //this.proxy.getEventManager().register(this, new ProxyEvents()); //<--planned for removal
 
         if (config().get("webserver-enabled").getAsBoolean()) {
             HttpServer httpServer = new HttpServer();
             httpServer.start();
-        }
-
-        if (config().get("docker-socket-enabled").getAsBoolean()) {
-            Docker.init();
-            this.proxy.getEventManager().register(this, new ServerEvents());
         }
 
         ServerUtils.pingAllRegisteredServers();
