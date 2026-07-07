@@ -1,5 +1,6 @@
 package com.crecraftstudios.velocityplus;
 
+import com.crecraftstudios.velocityplus.api.VelocityPlusAPI;
 import com.crecraftstudios.velocityplus.commands.*;
 import com.crecraftstudios.velocityplus.events.LoginEvents;
 import com.crecraftstudios.velocityplus.events.ServerEvents;
@@ -67,13 +68,14 @@ public class VelocityPlus {
         this.bans = new Bans();
 
         this.queueManager = new QueueManager();
+
+        new VelocityPlusAPI(this);
     }
 
     @Subscribe
     public void onInit(ProxyInitializeEvent event) {
         this.proxy.getEventManager().register(this, new LoginEvents());
         this.proxy.getEventManager().register(this, new ServerEvents());
-        //this.proxy.getEventManager().register(this, new ProxyEvents()); //<--planned for removal
 
         if (config().get("webserver-enabled").getAsBoolean()) {
             HttpServer httpServer = new HttpServer();
@@ -139,6 +141,8 @@ public class VelocityPlus {
         this.registerCommand(commandManager, MaintenanceCommand.createCommand(), "maintenance", "main");
         this.registerCommand(commandManager, BanCommand.createCommand(this.proxy), "vban", "proxy-ban", "velocity-ban", "pban");
         this.registerCommand(commandManager, UnbanCommand.createCommand(this.proxy), "vunban", "proxy-unban", "velocity-unban", "punban");
+        this.registerCommand(commandManager, RegisterServerCommand.createCommand(this.proxy), "register");
+        this.registerCommand(commandManager, UnregisterServerCommand.createCommand(this.proxy), "unregister");
     }
 
     private void registerCommand(CommandManager manager, BrigadierCommand commandObject, String command, String... aliases) {

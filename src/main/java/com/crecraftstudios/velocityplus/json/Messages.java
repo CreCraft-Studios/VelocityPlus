@@ -75,6 +75,8 @@ public class Messages extends Json {
             public static final String WHITELIST_NOT_FOUND="command.whitelist.not-found";
             public static final String PLAYER_NOW_BANNED="command.ban.player-banned";
             public static final String PLAYER_NOW_UNBANNED="command.unban.player";
+            public static final String DUPLICATE_REGISTERED_SERVER="command.register.duplicate-name";
+            public static final String REGISTERED_SERVER_NOT_FOUND="command.unregister.not-found";
         }
 
         public static class Message {

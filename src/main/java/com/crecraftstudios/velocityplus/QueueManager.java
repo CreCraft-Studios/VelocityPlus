@@ -1,7 +1,6 @@
 package com.crecraftstudios.velocityplus;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.crecraftstudios.velocityplus.api.event.server.RequestStartServerEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 
@@ -36,20 +35,13 @@ public class QueueManager {
 
         Optional<RegisteredServer> server = VelocityPlus.get().proxy.getServer(serverName);
         if (server.isEmpty()) {
-            VelocityPlus.get().logger.error("Can't start server {} as it's not found", serverName);
+            VelocityPlus.get().logger.error("Can't find registered server {}, can't fire event", serverName);
             return;
         }
 
-        JsonArray containerArray = VelocityPlus.get().config().get("docker").getAsJsonArray();
-
-        containerArray.forEach(con->{
-            JsonObject obj = con.getAsJsonObject();
-
-            if (!Objects.equals(obj.get("server_name").getAsString(), serverName))
-                return;
-
-            this.queuedServers.put(serverName, server.get());
-
+        VelocityPlus.get().proxy.getEventManager().fire(new RequestStartServerEvent(server.get())).thenAccept((e)->{
+            if (!e.isCancelled())
+                this.queuedServers.put(serverName, server.get());
         });
     }
 

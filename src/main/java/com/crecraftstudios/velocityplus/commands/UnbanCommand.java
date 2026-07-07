@@ -2,6 +2,7 @@ package com.crecraftstudios.velocityplus.commands;
 
 import com.crecraftstudios.velocityplus.Permissions;
 import com.crecraftstudios.velocityplus.VelocityPlus;
+import com.crecraftstudios.velocityplus.api.VelocityPlusAPI;
 import com.crecraftstudios.velocityplus.json.Messages;
 import com.crecraftstudios.velocityplus.utils.Mojang;
 import com.mojang.brigadier.Command;
@@ -21,7 +22,7 @@ public class UnbanCommand {
                                 if (uuid==null)
                                     ctx.getSource().sendMessage(VelocityPlus.get().messages.getMessage(Messages.Keys.Message.MOJANG_PLAYER_NOT_FOUND, ctx.getArgument("player", String.class)));
                                 else {
-                                    VelocityPlus.get().bans.unban(uuid);
+                                    VelocityPlusAPI.get().getBanService().unban(uuid);
                                     ctx.getSource().sendMessage(VelocityPlus.get().messages.getMessage(Messages.Keys.Commands.PLAYER_NOW_UNBANNED, ctx.getArgument("player", String.class)));
                                 }
 

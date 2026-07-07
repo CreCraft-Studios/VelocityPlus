@@ -1,17 +1,13 @@
 {
   "lobby": "lobby",
   "fallback": "fallback",
-  "docker-socket-enabled": false,
-  "webserver-enabled": true,
+  "motd": {
+    "forced-host-domain": "A velocity server"
+  },
+  "check-server-online-mode": "ping",
+  "webserver-enabled": false,
   "webserver": {
     "host": "127.0.0.1",
     "port": 8586
-  },
-  "docker":
-    [
-      {
-        "server_name": "name of the minecraft server in velocity.toml",
-        "container_name": "name of the docker container"
-      }
-  ]
+  }
 }

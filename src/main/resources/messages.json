@@ -18,6 +18,8 @@
   "command.whitelist.not-found": "<red>%s isn't in the whitelist</red>",
   "command.ban.player-banned": "%s has now been banned",
   "command.unban.player": "%s has now been unbanned",
+  "command.register.duplicate-name": "There is already a registered server with the name %s",
+  "command.unregister.not-found": "Can't find registered server %s",
   "messages.not-whitelisted": "You're not whitelisted on this network",
   "messages.maintenance.current": "Server network is currently down for maintenance. Check back later",
   "messages.maintenance.current.ping": "Network currently down for maintenance",

@@ -10,12 +10,13 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.api.util.Favicon;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import java.util.HashMap;
 import java.util.Optional;
 
 public class ProxyEvents {
-    private final HashMap<String, ServerDetails> cacheServers = new HashMap<>();
+    //private final HashMap<String, ServerDetails> cacheServers = new HashMap<>();
 
     /**Velocity already has this feature, no need to reinvent the wheel*/
     @Deprecated(forRemoval = true)
@@ -30,7 +31,16 @@ public class ProxyEvents {
             event.setPing(builder.build());
         } else event.getConnection().getVirtualHost().ifPresent(host -> {
             String domain = host.getHostString();
-            RegisteredServer info = ServerUtils.getRegisteredServer(domain);
+
+            String MOTD = VelocityPlus.get().config().get("motd").getAsJsonObject().get(domain).getAsString();
+            if (MOTD==null)
+                return;
+
+            builder.description(MiniMessage.miniMessage().deserialize(MOTD));
+            event.setPing(builder.build());
+
+
+            /*RegisteredServer info = ServerUtils.getRegisteredServer(domain);
 
             if (info==null)
                 return;
@@ -58,7 +68,7 @@ public class ProxyEvents {
                     builder.maximumPlayers(details.getMaxPlayers());
                     event.setPing(builder.build());
                 });
-            }
+            }*/
         });
     }
 }

@@ -1,5 +1,6 @@
 package com.crecraftstudios.velocityplus.events;
 
+import com.crecraftstudios.velocityplus.api.VelocityPlusAPI;
 import com.crecraftstudios.velocityplus.json.Messages;
 import com.crecraftstudios.velocityplus.Permissions;
 import com.crecraftstudios.velocityplus.VelocityPlus;
@@ -44,8 +45,8 @@ public class LoginEvents {
         if (!VelocityPlus.get().whitelist.isWhitelisted(event.getPlayer().getUniqueId()))
             event.setResult(ResultedEvent.ComponentResult.denied(VelocityPlus.get().messages.getMessage(Messages.Keys.Message.NOT_WHITELISTED)));
 
-        if (VelocityPlus.get().bans.isBanned(event.getPlayer().getUniqueId()))
-            event.setResult(ResultedEvent.ComponentResult.denied(VelocityPlus.get().bans.getBanMessage(event.getPlayer().getUniqueId())));
+        if (VelocityPlusAPI.get().getBanService().isBanned(event.getPlayer()))
+            event.setResult(ResultedEvent.ComponentResult.denied(VelocityPlusAPI.get().getBanService().getBanMessage(event.getPlayer())));
     }
 
     @Subscribe

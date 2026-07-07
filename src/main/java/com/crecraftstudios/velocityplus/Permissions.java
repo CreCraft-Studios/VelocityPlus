@@ -11,6 +11,8 @@ public class Permissions {
         public static final String ALERT = "velocityplus.admin.alert";
         public static final String BAN_PERM = "velocityplus.admin.ban.perm";
         public static final String UNBAN_PERM = "velocityplus.admin.unban.perm";
+        public static final String REGISTER_SERVER = "velocityplus.admin.server.register";
+        public static final String UNREGISTER_SERVER = "velocityplus.admin.server.unregister";
     }
 
     public static final String CONNECT_IN_MAINTENANCE = "velocityplus.admin.enter-on-maintenance";
