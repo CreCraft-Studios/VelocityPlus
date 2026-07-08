@@ -1,4 +1,4 @@
-VelocityPlus is designed to provide extra utilities for running a velocity proxy.
+Velocity Core is designed to provide extra utilities for running a velocity proxy.
 
 ## License
 

@@ -1,4 +1,4 @@
-package com.crecraftstudios.velocityplus;
+package com.crecraftstudios.velocitycore;
 
 // The constants are replaced before compilation
 public class BuildConstants {
