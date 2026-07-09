@@ -118,7 +118,7 @@ The `ban()` and `unban()` methods accept:
 
 Velocity Core currently provides the following events.
 
-## `PlayerBannedEvent`
+## `onPlayerBannedEvent`
 
 Called whenever a player is banned.
 
